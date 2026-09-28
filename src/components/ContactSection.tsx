@@ -4,16 +4,25 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { MARWA_BIOGRAPHY } from '@/data/portfolioData';
 import { Butterfly } from './Butterfly';
-import { Mail, Phone, ArrowUpRight, Copy, Check } from 'lucide-react';
+import { Mail, Phone, MessageCircle, ArrowUpRight, Copy, Check } from 'lucide-react';
 
 export const ContactSection: React.FC = () => {
   const [copied, setCopied] = useState(false);
+  const [copiedPhone, setCopiedPhone] = useState(false);
   const [isCtaHovered, setIsCtaHovered] = useState(false);
 
   const copyEmail = () => {
     navigator.clipboard.writeText(MARWA_BIOGRAPHY.contact.email);
     setCopied(true);
     setTimeout(() => setCopied(false), 2500);
+  };
+
+  const copyPhone = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    navigator.clipboard.writeText(MARWA_BIOGRAPHY.contact.phone);
+    setCopiedPhone(true);
+    setTimeout(() => setCopiedPhone(false), 2500);
   };
 
   return (
@@ -165,34 +174,59 @@ export const ContactSection: React.FC = () => {
             </p>
           </div>
 
-          {/* Telephone Action Card */}
+          {/* WhatsApp & Telephone Action Card */}
           <div
             onMouseEnter={() => setIsCtaHovered(true)}
             onMouseLeave={() => setIsCtaHovered(false)}
             onFocus={() => setIsCtaHovered(true)}
             onBlur={() => setIsCtaHovered(false)}
-            className="group relative p-4 sm:p-5 rounded-xl bg-[var(--bg-surface)] border border-[var(--border-subtle)] hover:border-[#FF662B]/80 transition-all duration-300 shadow-3d-card hover:shadow-[0_8px_24px_rgba(255,102,43,0.14)]"
+            className="group relative p-4 sm:p-5 rounded-xl bg-[var(--bg-surface)] border border-[var(--border-subtle)] hover:border-[#25D366]/80 transition-all duration-300 shadow-3d-card hover:shadow-[0_8px_24px_rgba(37,211,102,0.14)]"
           >
             <div className="flex items-center justify-between mb-2">
-              <span className="text-[11px] uppercase tracking-wider text-[#FF7D3C] font-sans font-medium flex items-center gap-1.5">
-                <Phone size={12} className="text-[#FF662B]" /> Telephone & WhatsApp
+              <span className="text-[11px] uppercase tracking-wider text-[#25D366] font-sans font-semibold flex items-center gap-1.5">
+                <MessageCircle size={13} className="text-[#25D366]" /> WhatsApp & Mobile
               </span>
-              <Phone size={12} className="text-[#FF662B]" />
+              <div className="flex items-center gap-2">
+                <a
+                  href={`tel:${MARWA_BIOGRAPHY.contact.phone}`}
+                  className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-[var(--bg-canvas)] text-[10px] text-[var(--text-secondary)] hover:text-[#FF7D3C] hover:border-[#FF662B] transition-colors border border-[var(--border-subtle)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF662B]"
+                  title="Direct Phone Call"
+                >
+                  <Phone size={10} className="text-[#FF7D3C]" />
+                  <span>Call</span>
+                </a>
+                <button
+                  onClick={copyPhone}
+                  className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-[var(--bg-canvas)] text-[10px] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-[#25D366] transition-colors border border-[var(--border-subtle)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#25D366]"
+                  title="Copy phone number to clipboard"
+                >
+                  {copiedPhone ? <Check size={11} className="text-emerald-400" /> : <Copy size={11} />}
+                  <span>{copiedPhone ? 'Copied' : 'Copy'}</span>
+                </button>
+              </div>
             </div>
 
             <a
-              href={`tel:${MARWA_BIOGRAPHY.contact.phone}`}
-              className="font-sans font-semibold tracking-wider text-xl sm:text-2xl text-[var(--text-primary)] hover:text-[#FF7D3C] transition-colors flex items-center justify-between focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF662B] rounded"
+              href={MARWA_BIOGRAPHY.contact.whatsapp}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Open WhatsApp chat with Marwa at ${MARWA_BIOGRAPHY.contact.phone}`}
+              className="font-sans font-semibold tracking-wider text-xl sm:text-2xl text-[var(--text-primary)] hover:text-[#25D366] transition-colors flex items-center justify-between focus:outline-none focus-visible:ring-2 focus-visible:ring-[#25D366] rounded"
             >
-              <span>{MARWA_BIOGRAPHY.contact.phone}</span>
+              <span className="flex flex-wrap items-center gap-2">
+                <span>{MARWA_BIOGRAPHY.contact.phone}</span>
+                <span className="inline-flex items-center gap-1 text-[11px] font-sans font-medium px-2 py-0.5 rounded-full bg-[#25D366]/15 text-[#25D366] border border-[#25D366]/30">
+                  <MessageCircle size={10} /> Chat on WhatsApp
+                </span>
+              </span>
               <ArrowUpRight
                 size={18}
-                className="text-[#FF662B] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform flex-shrink-0 ml-2"
+                className="text-[#25D366] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform flex-shrink-0 ml-2"
               />
             </a>
 
             <p className="font-sans text-[11px] text-[var(--text-muted)] mt-1.5">
-              Direct voice or mobile messaging ({MARWA_BIOGRAPHY.contact.phoneFormatted})
+              Click number to start a WhatsApp conversation ({MARWA_BIOGRAPHY.contact.phoneFormatted})
             </p>
           </div>
         </div>

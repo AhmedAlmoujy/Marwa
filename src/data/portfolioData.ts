@@ -21,11 +21,62 @@ export interface Project {
 }
 
 export const PORTFOLIO_CATEGORIES = [
-  { id: 'all', label: 'All Works' },
-  { id: 'graduation', label: 'Graduation Project (Printmaking)' },
-  { id: 'artworks', label: 'Fine Art & Printmaking' },
-  { id: 'digital-art', label: 'Digital Art' },
-  { id: 'ads', label: 'Advertising & Campaigns' },
+  {
+    id: 'curated',
+    label: 'Curated Highlights',
+    shortLabel: 'Highlights',
+    count: 8,
+    description: 'Premier selection representing the apex of fine art printmaking, brand architecture, and tactile commercial campaigns.',
+  },
+  {
+    id: 'graduation',
+    label: 'Graduation Project',
+    shortLabel: 'Graduation (2024)',
+    count: 9,
+    description: 'Monumental 7-meter installation presented at the Faculty of Fine Arts (Printed Design Division), featuring 8 original large-scale plates.',
+  },
+  {
+    id: 'artworks',
+    label: 'Fine Art & Printmaking',
+    shortLabel: 'Fine Art',
+    count: 3,
+    description: 'Traditional studio printmaking research exploring copper intaglio etching, tonal aquatint, and chemical stone lithography.',
+  },
+  {
+    id: 'digital-art',
+    label: 'Digital Art',
+    shortLabel: 'Digital Art',
+    count: 6,
+    description: 'Atmospheric digital compositions and chiaroscuro tonal studies exploring metamorphosis and organic silhouette dissolution.',
+  },
+  {
+    id: 'ads',
+    label: 'Advertising & Campaigns',
+    shortLabel: 'Advertising',
+    count: 16,
+    description: 'Commercial client identities, social media visual systems, and promotional campaign architectures.',
+  },
+] as const;
+
+export const CURATED_PROJECT_IDS = [
+  'grad-exhibition',
+  'intaglio-plate-1',
+  'lithograph-plate-5',
+  'fluid-art-palette',
+  'artworks-2023-2',
+  'digital-art-2024-1',
+  'ads-haven-1',
+  'ads-quadwaves-1',
+] as const;
+
+export const ADS_CAMPAIGNS = [
+  { id: 'all', label: 'All Campaigns', count: 16 },
+  { id: 'haven', label: 'Haven Car Care', count: 4 },
+  { id: 'quadwaves', label: 'Quadwaves Media', count: 4 },
+  { id: 'waredat', label: 'Waredat Logistics', count: 2 },
+  { id: 'adventure', label: 'Adventure Travel', count: 2 },
+  { id: 'mattress', label: 'Mattress Firm', count: 2 },
+  { id: 'rarities', label: 'Rarities & Curios', count: 2 },
 ] as const;
 
 export const PROJECTS: Project[] = [
@@ -785,6 +836,7 @@ export const MARWA_BIOGRAPHY = {
     email: 'm.a.elbahnsawy@gmail.com',
     phone: '01033113869',
     phoneFormatted: '+20 103 311 3869',
+    whatsapp: 'https://wa.me/201033113869',
     location: 'Egypt',
     portfolioUrl: 'https://sites.google.com/view/marwa-elbahnsawy/personal-overview',
     verifiedLinks: [
