@@ -17,6 +17,8 @@ interface ButterflyProps {
   withSparkles?: boolean;
   id?: string;
   registerAsTarget?: boolean;
+  bold?: boolean;
+  strokeWidthScale?: number;
 }
 
 /**
@@ -78,7 +80,10 @@ export const Butterfly: React.FC<ButterflyProps> = ({
   withSparkles = false,
   id,
   registerAsTarget = true,
+  bold = false,
+  strokeWidthScale = 1.0,
 }) => {
+  const scale = bold ? 1.85 : (strokeWidthScale || 1.0);
   const [internalReactive, setInternalReactive] = React.useState(false);
   const svgRef = React.useRef<SVGSVGElement>(null);
 
@@ -208,9 +213,9 @@ export const Butterfly: React.FC<ButterflyProps> = ({
           strokeLinejoin="round"
         >
           {/* Outer Rounded Hindwing Loop */}
-          <path d={EXACT_PATHS.hindOut} strokeWidth="1.4" />
+          <path d={EXACT_PATHS.hindOut} strokeWidth={(1.4 * scale).toFixed(2)} />
           {/* Inner Hindwing Loop with Bold Ink Arc on Bottom */}
-          <path d={EXACT_PATHS.hindIn} strokeWidth="2.5" />
+          <path d={EXACT_PATHS.hindIn} strokeWidth={(2.5 * scale).toFixed(2)} />
         </g>
 
         {/* ============================================================== */}
@@ -224,9 +229,9 @@ export const Butterfly: React.FC<ButterflyProps> = ({
           strokeLinejoin="round"
         >
           {/* Outer Scalloped Crest Edge */}
-          <path d={EXACT_PATHS.leftOut} strokeWidth="1.5" />
+          <path d={EXACT_PATHS.leftOut} strokeWidth={(1.5 * scale).toFixed(2)} />
           {/* Inner Subtle Seam Curve */}
-          <path d={EXACT_PATHS.leftIn} strokeWidth="1.3" opacity="0.9" />
+          <path d={EXACT_PATHS.leftIn} strokeWidth={(1.3 * scale).toFixed(2)} opacity="0.9" />
         </g>
 
         {/* ============================================================== */}
@@ -240,9 +245,9 @@ export const Butterfly: React.FC<ButterflyProps> = ({
           strokeLinejoin="round"
         >
           {/* Outer Trailing Edge */}
-          <path d={EXACT_PATHS.foreTrail} strokeWidth="1.4" />
+          <path d={EXACT_PATHS.foreTrail} strokeWidth={(1.4 * scale).toFixed(2)} />
           {/* Bold Expressive Leading Edge Line (Signature ink stroke) */}
-          <path d={EXACT_PATHS.foreLead} strokeWidth="2.7" />
+          <path d={EXACT_PATHS.foreLead} strokeWidth={(2.7 * scale).toFixed(2)} />
         </g>
 
         {/* ============================================================== */}
@@ -255,9 +260,9 @@ export const Butterfly: React.FC<ButterflyProps> = ({
           strokeLinejoin="round"
         >
           {/* Small Horizontal Oval/Teardrop Body Loop */}
-          <path d={EXACT_PATHS.body} strokeWidth="1.7" />
+          <path d={EXACT_PATHS.body} strokeWidth={(1.7 * scale).toFixed(2)} />
           {/* Delicate Downward Tail Flick Line */}
-          <path d={EXACT_PATHS.tail} strokeWidth="1.5" />
+          <path d={EXACT_PATHS.tail} strokeWidth={(1.5 * scale).toFixed(2)} />
         </g>
       </g>
     </svg>

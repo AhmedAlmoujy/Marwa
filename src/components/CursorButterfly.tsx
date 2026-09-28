@@ -173,8 +173,8 @@ export const CursorButterfly: React.FC<CursorButterflyProps> = ({
   if (!isFinePointer || prefersReducedMotion || !isActive) return null;
 
   const isDark = theme === 'dark';
-  const strokeColor = isDark ? '#D4BDE6' : '#7928CA'; // Lilac in dark, amethyst in light
-  const accentColor = '#FF662B'; // Molten amber
+  const strokeColor = '#D46835';
+  const accentColor = '#D46835';
 
   return (
     <div
@@ -183,8 +183,8 @@ export const CursorButterfly: React.FC<CursorButterflyProps> = ({
       style={{
         transform: `translate3d(${posRef.current.currentX}px, ${posRef.current.currentY}px, 0)`,
         filter: isDark
-          ? 'drop-shadow(0 6px 12px rgba(121, 40, 202, 0.28))'
-          : 'drop-shadow(0 4px 10px rgba(92, 35, 125, 0.18))',
+          ? 'drop-shadow(0 6px 14px rgba(212, 104, 53, 0.45)) drop-shadow(0 0 10px rgba(212, 104, 53, 0.35))'
+          : 'drop-shadow(0 4px 12px rgba(212, 104, 53, 0.4)) drop-shadow(0 0 8px rgba(212, 104, 53, 0.25))',
       }}
       aria-hidden="true"
     >
@@ -192,9 +192,10 @@ export const CursorButterfly: React.FC<CursorButterflyProps> = ({
         <Butterfly
           variant="profile"
           state={state}
-          size={38}
+          size={42}
           strokeColor={strokeColor}
           accentColor={accentColor}
+          bold={true}
           fillOpacity={0.22}
           withSparkles={false}
           registerAsTarget={false}

@@ -117,9 +117,8 @@ export const ButterflyTrail: React.FC = () => {
 
       // Render organic curved trail if at least 2 points exist
       if (points.length >= 2) {
-        const isDark = theme === 'dark';
-        const primaryColor = isDark ? '212, 189, 230' : '92, 35, 125'; // Lavender vs Amethyst
-        const accentColor = '255, 102, 43'; // Molten Flame accent
+        const primaryColor = '212, 104, 53'; // Warm terracotta #D46835
+        const accentColor = '235, 125, 75'; // Luminous glowing highlight
 
         ctx.lineCap = 'round';
         ctx.lineJoin = 'round';
@@ -135,8 +134,8 @@ export const ButterflyTrail: React.FC = () => {
 
           const progress = i / (points.length - 1); // 0 (oldest) to 1 (newest)
           const ageRatio = 1 - (currentTime - p2.time) / maxAge;
-          const alpha = Math.max(0, Math.min(1, progress * ageRatio * 0.75));
-          const lineWidth = Math.max(0.4, progress * 2.2);
+          const alpha = Math.max(0, Math.min(1, progress * ageRatio * 0.85));
+          const lineWidth = Math.max(0.6, progress * 2.8);
 
           ctx.beginPath();
           ctx.lineWidth = lineWidth;
@@ -151,9 +150,9 @@ export const ButterflyTrail: React.FC = () => {
 
           ctx.quadraticCurveTo(p1.x, p1.y, midX, midY);
 
-          // Subtle blend into flame amber near newest point
-          if (progress > 0.85) {
-            ctx.strokeStyle = `rgba(${accentColor}, ${alpha * 0.9})`;
+          // Subtle blend into vibrant glow near newest point
+          if (progress > 0.82) {
+            ctx.strokeStyle = `rgba(${accentColor}, ${alpha * 0.95})`;
           } else {
             ctx.strokeStyle = `rgba(${primaryColor}, ${alpha})`;
           }
@@ -175,7 +174,7 @@ export const ButterflyTrail: React.FC = () => {
         spark.y += spark.vy;
         const sparkAlpha = (1 - spark.life / spark.maxLife) * spark.alpha;
 
-        ctx.fillStyle = `rgba(255, 125, 60, ${sparkAlpha})`;
+        ctx.fillStyle = `rgba(212, 104, 53, ${sparkAlpha})`;
         ctx.beginPath();
         ctx.arc(spark.x, spark.y, spark.size, 0, Math.PI * 2);
         ctx.fill();
