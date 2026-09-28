@@ -13,22 +13,22 @@ export const VerifiedArchivesSection: React.FC = () => {
       className="py-8 md:py-10 px-6 md:px-12 max-w-7xl mx-auto scroll-mt-20 transition-colors duration-300"
     >
       {/* Compact Section Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between mb-4 pb-3 border-b border-[var(--border-subtle)]">
+      <div className="flex flex-col md:flex-row md:items-end justify-between mb-4 pb-3 border-b border-(--border-subtle)">
         <div>
           <div className="flex items-center gap-2.5 mb-2">
-            <span className="w-6 h-[2px] bg-[#FF662B]" />
+            <span className="w-6 h-0.5 bg-amber-flame" />
             <div className="flex items-center gap-1.5">
-              <ShieldCheck size={14} className="text-[#FF662B]" />
-              <span className="text-[11px] font-semibold tracking-[0.2em] uppercase text-[#FF7D3C]">
+              <ShieldCheck size={14} className="text-amber-flame" />
+              <span className="text-[11px] font-semibold tracking-[0.2em] uppercase text-amber-vibrant">
                 Direct Archive Sources
               </span>
             </div>
           </div>
-          <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl text-[var(--text-primary)] font-medium">
-            Verified Portfolio &amp; <span className="italic font-normal text-transparent bg-clip-text bg-gradient-to-r from-[#FF7D3C] to-[#FFA05E]">Repositories</span>
+          <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl text-(--text-primary) font-medium">
+            Verified Portfolio &amp; <span className="italic font-normal text-transparent bg-clip-text bg-linear-to-r from-amber-vibrant to-amber-glow">Repositories</span>
           </h2>
         </div>
-        <p className="mt-2 md:mt-0 font-sans text-sm md:text-base text-[var(--text-secondary)] max-w-md leading-relaxed font-normal">
+        <p className="mt-2 md:mt-0 font-sans text-sm md:text-base text-(--text-secondary) max-w-md leading-relaxed font-normal">
           Direct verified links to official Google Drive source directories, Google Sites presentations, and high-resolution printmaking records.
         </p>
       </div>
@@ -50,15 +50,15 @@ export const VerifiedArchivesSection: React.FC = () => {
                 href={linkItem.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group relative p-4 rounded-xl bg-[var(--bg-surface)] border border-[var(--border-subtle)] hover:border-[#FF662B]/80 hover:bg-[var(--color-surface-hover)] transition-all duration-300 flex flex-col justify-between h-full shadow-3d-card focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF662B]"
+                className="group relative p-4 rounded-xl bg-(--bg-surface) border border-(--border-subtle) hover:border-amber-flame/80 hover:bg-surface-hover transition-all duration-300 flex flex-col justify-between h-full shadow-3d-card focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-flame"
               >
                 <div>
                   <div className="flex items-center justify-between mb-2">
                     <span
                       className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-mono font-medium ${
                         isDrive
-                          ? 'bg-[#FF662B]/15 text-[#FF7D3C] border border-[#FF662B]/30'
-                          : 'bg-[#7928CA]/15 text-[#D4BDE6] border border-[#7928CA]/30'
+                          ? 'bg-amber-flame/15 text-amber-vibrant border border-amber-flame/30'
+                          : 'bg-purple-vivid/15 text-lavender-soft border border-purple-vivid/30'
                       }`}
                     >
                       <FolderGit2 size={10} />
@@ -67,18 +67,18 @@ export const VerifiedArchivesSection: React.FC = () => {
 
                     <ExternalLink
                       size={13}
-                      className="text-[var(--text-muted)] group-hover:text-[#FF662B] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"
+                      className="text-(--text-muted) group-hover:text-amber-flame group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"
                     />
                   </div>
 
-                  <h3 className="font-serif text-base sm:text-lg text-[var(--text-primary)] group-hover:text-[#FF7D3C] transition-colors leading-snug">
+                  <h3 className="font-serif text-base sm:text-lg text-(--text-primary) group-hover:text-amber-vibrant transition-colors leading-snug">
                     {linkItem.label}
                   </h3>
                 </div>
 
-                <div className="mt-3 pt-2.5 border-t border-[var(--border-subtle)] flex items-center justify-between text-[11px] text-[var(--text-muted)]">
+                <div className="mt-3 pt-2.5 border-t border-(--border-subtle) flex items-center justify-between text-[11px] text-(--text-muted)">
                   <span>{isDrive ? 'Raw Asset Folder' : 'Curated Exhibition'}</span>
-                  <span className="text-[#FF7D3C] opacity-0 group-hover:opacity-100 transition-opacity font-medium">
+                  <span className="text-amber-vibrant opacity-0 group-hover:opacity-100 transition-opacity font-medium">
                     Open Archive &rarr;
                   </span>
                 </div>

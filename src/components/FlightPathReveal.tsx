@@ -145,7 +145,7 @@ export const FlightPathReveal: React.FC<FlightPathRevealProps> = ({
       </div>
 
       {label && (
-        <span className="text-[10px] font-mono tracking-[0.25em] uppercase text-[#FF7D3C] mt-1 opacity-75">
+        <span className="text-[10px] font-mono tracking-[0.25em] uppercase text-amber-vibrant mt-1 opacity-75">
           {label}
         </span>
       )}

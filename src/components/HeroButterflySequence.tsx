@@ -267,11 +267,11 @@ export const HeroButterflySequence: React.FC<HeroButterflySequenceProps> = ({
         disabled={isPlaying}
         aria-label="Replay The Butterfly Effect emergence flight"
         title="Replay The Butterfly Effect emergence flight"
-        className="group absolute bottom-3 right-3 z-30 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[var(--bg-surface)]/90 backdrop-blur-md border border-[var(--border-subtle)] text-[11px] font-sans font-medium text-[var(--text-primary)] shadow-sm hover:border-[#FF662B] hover:text-[#FF7D3C] transition-all duration-300 disabled:opacity-40"
+        className="group absolute bottom-3 right-3 z-30 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-(--bg-surface)/90 backdrop-blur-md border border-(--border-subtle) text-[11px] font-sans font-medium text-(--text-primary) shadow-sm hover:border-amber-flame hover:text-amber-vibrant transition-all duration-300 disabled:opacity-40"
       >
         <RotateCcw
           size={12}
-          className={`transition-transform duration-500 text-[#FF7D3C] ${
+          className={`transition-transform duration-500 text-amber-vibrant ${
             isPlaying ? 'animate-spin' : 'group-hover:-rotate-90'
           }`}
         />

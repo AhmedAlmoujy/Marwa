@@ -58,7 +58,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${cormorant.variable} ${manrope.variable}`} data-theme="dark">
-      <body className="bg-[var(--bg-canvas)] text-[var(--text-primary)] antialiased transition-colors duration-300">
+      <body className="bg-(--bg-canvas) text-(--text-primary) antialiased transition-colors duration-300">
         <MotionProvider>
           <ThemeProvider>
             {children}

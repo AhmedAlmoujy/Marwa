@@ -28,11 +28,11 @@ export const ContactSection: React.FC = () => {
   return (
     <footer
       id="contact"
-      className="relative bg-[var(--bg-canvas)] text-[var(--text-primary)] pt-10 pb-8 px-6 md:px-12 overflow-hidden scroll-mt-20 border-t border-[var(--border-subtle)] transition-colors duration-300"
+      className="relative bg-(--bg-canvas) text-(--text-primary) pt-10 pb-8 px-6 md:px-12 overflow-hidden scroll-mt-20 border-t border-(--border-subtle) transition-colors duration-300"
     >
       {/* Ambient fluid art background glows */}
-      <div className="absolute top-0 left-1/4 w-72 h-72 bg-[#7928CA]/15 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-6 right-1/4 w-60 h-60 bg-[#FF662B]/12 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-0 left-1/4 w-72 h-72 bg-purple-vivid/15 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-6 right-1/4 w-60 h-60 bg-amber-flame/12 rounded-full blur-3xl pointer-events-none" />
 
       {/* Contact Finale: Balanced 3-Butterfly Gathering */}
       <div className="absolute top-6 right-8 md:right-24 pointer-events-none opacity-90 transition-all duration-700">
@@ -95,20 +95,20 @@ export const ContactSection: React.FC = () => {
         {/* Main Bold Invitation */}
         <div className="max-w-3xl mb-6 md:mb-8">
           <div className="flex items-center gap-2.5 mb-2.5">
-            <span className="w-6 h-[2px] bg-[#FF662B]" />
-            <span className="text-[11px] font-semibold tracking-[0.2em] uppercase text-[#FF7D3C]">
+            <span className="w-6 h-0.5 bg-amber-flame" />
+            <span className="text-[11px] font-semibold tracking-[0.2em] uppercase text-amber-vibrant">
               Start a Conversation
             </span>
           </div>
 
-          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-medium leading-[1.1] tracking-tight text-[var(--text-primary)] mb-3">
+          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-medium leading-[1.1] tracking-tight text-(--text-primary) mb-3">
             Let’s make something <br />
             worth{' '}
-            <span className="italic font-normal bg-gradient-to-r from-[#FF7D3C] via-[#FF5500] to-[#D4BDE6] bg-clip-text text-transparent relative inline-block">
+            <span className="italic font-normal bg-linear-to-r from-amber-vibrant via-[#FF5500] to-lavender-soft bg-clip-text text-transparent relative inline-block">
               looking
               {/* Hand-drawn underline revealed on contact CTA hover/focus */}
               <svg
-                className="absolute -bottom-1.5 left-0 w-full h-[6px] text-[#FF662B] pointer-events-none overflow-visible"
+                className="absolute -bottom-1.5 left-0 w-full h-1.5 text-amber-flame pointer-events-none overflow-visible"
                 viewBox="0 0 240 12"
                 fill="none"
               >
@@ -128,7 +128,7 @@ export const ContactSection: React.FC = () => {
             at.
           </h2>
 
-          <p className="font-sans text-base text-[var(--text-secondary)] leading-relaxed max-w-xl font-normal">
+          <p className="font-sans text-base text-(--text-secondary) leading-relaxed max-w-xl font-normal">
             Whether for a comprehensive visual identity, cultural exhibition print design, 
             commercial advertising campaign, or experimental printmaking project.
           </p>
@@ -142,15 +142,15 @@ export const ContactSection: React.FC = () => {
             onMouseLeave={() => setIsCtaHovered(false)}
             onFocus={() => setIsCtaHovered(true)}
             onBlur={() => setIsCtaHovered(false)}
-            className="group relative p-4 sm:p-5 rounded-xl bg-[var(--bg-surface)] border border-[var(--border-subtle)] hover:border-[#FF662B]/80 transition-all duration-300 shadow-3d-card hover:shadow-[0_8px_24px_rgba(255,102,43,0.14)]"
+            className="group relative p-4 sm:p-5 rounded-xl bg-(--bg-surface) border border-(--border-subtle) hover:border-amber-flame/80 transition-all duration-300 shadow-3d-card hover:shadow-[0_8px_24px_rgba(255,102,43,0.14)]"
           >
             <div className="flex items-center justify-between mb-2">
-              <span className="text-[11px] uppercase tracking-wider text-[#FF7D3C] font-sans font-medium flex items-center gap-1.5">
-                <Mail size={12} className="text-[#FF662B]" /> Direct Email
+              <span className="text-[11px] uppercase tracking-wider text-amber-vibrant font-sans font-medium flex items-center gap-1.5">
+                <Mail size={12} className="text-amber-flame" /> Direct Email
               </span>
               <button
                 onClick={copyEmail}
-                className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-[var(--bg-canvas)] text-[10px] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-[#FF662B] transition-colors border border-[var(--border-subtle)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF662B]"
+                className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-(--bg-canvas) text-[10px] text-(--text-secondary) hover:text-(--text-primary) hover:border-amber-flame transition-colors border border-(--border-subtle) focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-flame"
                 title="Copy email to clipboard"
               >
                 {copied ? <Check size={11} className="text-emerald-400" /> : <Copy size={11} />}
@@ -160,16 +160,16 @@ export const ContactSection: React.FC = () => {
 
             <a
               href={`mailto:${MARWA_BIOGRAPHY.contact.email}`}
-              className="font-sans font-medium text-lg sm:text-xl text-[var(--text-primary)] hover:text-[#FF7D3C] transition-colors flex items-center justify-between focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF662B] rounded"
+              className="font-sans font-medium text-lg sm:text-xl text-(--text-primary) hover:text-amber-vibrant transition-colors flex items-center justify-between focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-flame rounded"
             >
               <span className="break-all">{MARWA_BIOGRAPHY.contact.email}</span>
               <ArrowUpRight
                 size={18}
-                className="text-[#FF662B] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform flex-shrink-0 ml-2"
+                className="text-amber-flame group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform shrink-0 ml-2"
               />
             </a>
 
-            <p className="font-sans text-[11px] text-[var(--text-muted)] mt-1.5">
+            <p className="font-sans text-[11px] text-(--text-muted) mt-1.5">
               Inquiries, commissions, & collaboration proposals
             </p>
           </div>
@@ -180,7 +180,7 @@ export const ContactSection: React.FC = () => {
             onMouseLeave={() => setIsCtaHovered(false)}
             onFocus={() => setIsCtaHovered(true)}
             onBlur={() => setIsCtaHovered(false)}
-            className="group relative p-4 sm:p-5 rounded-xl bg-[var(--bg-surface)] border border-[var(--border-subtle)] hover:border-[#25D366]/80 transition-all duration-300 shadow-3d-card hover:shadow-[0_8px_24px_rgba(37,211,102,0.14)]"
+            className="group relative p-4 sm:p-5 rounded-xl bg-(--bg-surface) border border-(--border-subtle) hover:border-[#25D366]/80 transition-all duration-300 shadow-3d-card hover:shadow-[0_8px_24px_rgba(37,211,102,0.14)]"
           >
             <div className="flex items-center justify-between mb-2">
               <span className="text-[11px] uppercase tracking-wider text-[#25D366] font-sans font-semibold flex items-center gap-1.5">
@@ -189,15 +189,15 @@ export const ContactSection: React.FC = () => {
               <div className="flex items-center gap-2">
                 <a
                   href={`tel:${MARWA_BIOGRAPHY.contact.phone}`}
-                  className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-[var(--bg-canvas)] text-[10px] text-[var(--text-secondary)] hover:text-[#FF7D3C] hover:border-[#FF662B] transition-colors border border-[var(--border-subtle)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF662B]"
+                  className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-(--bg-canvas) text-[10px] text-(--text-secondary) hover:text-amber-vibrant hover:border-amber-flame transition-colors border border-(--border-subtle) focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-flame"
                   title="Direct Phone Call"
                 >
-                  <Phone size={10} className="text-[#FF7D3C]" />
+                  <Phone size={10} className="text-amber-vibrant" />
                   <span>Call</span>
                 </a>
                 <button
                   onClick={copyPhone}
-                  className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-[var(--bg-canvas)] text-[10px] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-[#25D366] transition-colors border border-[var(--border-subtle)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#25D366]"
+                  className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-(--bg-canvas) text-[10px] text-(--text-secondary) hover:text-(--text-primary) hover:border-[#25D366] transition-colors border border-(--border-subtle) focus:outline-none focus-visible:ring-2 focus-visible:ring-[#25D366]"
                   title="Copy phone number to clipboard"
                 >
                   {copiedPhone ? <Check size={11} className="text-emerald-400" /> : <Copy size={11} />}
@@ -211,7 +211,7 @@ export const ContactSection: React.FC = () => {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={`Open WhatsApp chat with Marwa at ${MARWA_BIOGRAPHY.contact.phone}`}
-              className="font-sans font-semibold tracking-wider text-xl sm:text-2xl text-[var(--text-primary)] hover:text-[#25D366] transition-colors flex items-center justify-between focus:outline-none focus-visible:ring-2 focus-visible:ring-[#25D366] rounded"
+              className="font-sans font-semibold tracking-wider text-xl sm:text-2xl text-(--text-primary) hover:text-[#25D366] transition-colors flex items-center justify-between focus:outline-none focus-visible:ring-2 focus-visible:ring-[#25D366] rounded"
             >
               <span className="flex flex-wrap items-center gap-2">
                 <span>{MARWA_BIOGRAPHY.contact.phone}</span>
@@ -221,30 +221,30 @@ export const ContactSection: React.FC = () => {
               </span>
               <ArrowUpRight
                 size={18}
-                className="text-[#25D366] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform flex-shrink-0 ml-2"
+                className="text-[#25D366] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform shrink-0 ml-2"
               />
             </a>
 
-            <p className="font-sans text-[11px] text-[var(--text-muted)] mt-1.5">
+            <p className="font-sans text-[11px] text-(--text-muted) mt-1.5">
               Click number to start a WhatsApp conversation ({MARWA_BIOGRAPHY.contact.phoneFormatted})
             </p>
           </div>
         </div>
 
         {/* Bottom Credits & Verified Academic Note */}
-        <div className="pt-4 border-t border-[var(--border-subtle)] flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-[var(--text-muted)]">
+        <div className="pt-4 border-t border-(--border-subtle) flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-(--text-muted)">
           <div className="flex flex-col sm:flex-row items-center gap-1.5 sm:gap-3 text-center sm:text-left">
-            <span className="font-medium text-[var(--text-primary)]">
+            <span className="font-medium text-(--text-primary)">
               © {new Date().getFullYear()} Marwa El-Bahnsawy
             </span>
-            <span className="hidden sm:inline text-[#FF662B]">•</span>
+            <span className="hidden sm:inline text-amber-flame">•</span>
             <span>Faculty of Fine Arts, Graphic Department (Printed Design Division, 2024)</span>
           </div>
 
           <div className="flex items-center gap-4">
             <Link
               href="#work"
-              className="hover:text-[#FF7D3C] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF662B] rounded"
+              className="hover:text-amber-vibrant transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-flame rounded"
             >
               Back to Gallery
             </Link>
@@ -252,10 +252,10 @@ export const ContactSection: React.FC = () => {
               href={MARWA_BIOGRAPHY.contact.portfolioUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-[#FF7D3C] transition-colors flex items-center gap-1 text-[var(--text-secondary)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF662B] rounded"
+              className="hover:text-amber-vibrant transition-colors flex items-center gap-1 text-(--text-secondary) focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-flame rounded"
             >
               <span>Personal Overview</span>
-              <ArrowUpRight size={11} className="text-[#FF662B]" />
+              <ArrowUpRight size={11} className="text-amber-flame" />
             </a>
           </div>
         </div>

@@ -23,8 +23,8 @@ export const KineticMarquee: React.FC<KineticMarqueeProps> = ({ inverted = false
     <div
       className={`relative w-full overflow-hidden py-4 border-y select-none ${
         inverted
-          ? 'bg-[#221232] border-[#FF662B]/30 text-[#FFD2B8]'
-          : 'bg-[#170C22] border-[#D4BDE6]/15 text-[#FAF4FD]'
+          ? 'bg-surface-elevated border-amber-flame/30 text-amber-pale'
+          : 'bg-surface border-lavender-soft/15 text-cream-pearl'
       }`}
       aria-hidden="true"
     >

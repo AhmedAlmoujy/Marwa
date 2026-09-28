@@ -13,7 +13,7 @@ import { FlightPathReveal } from '@/components/FlightPathReveal';
 
 export default function Home() {
   return (
-    <div className="relative min-h-screen bg-[var(--bg-canvas)] text-[var(--text-primary)] paper-grain flex flex-col justify-between overflow-x-hidden selection:bg-[#FF662B] selection:text-white transition-colors duration-300">
+    <div className="relative min-h-screen bg-(--bg-canvas) text-(--text-primary) paper-grain flex flex-col justify-between overflow-x-hidden selection:bg-amber-flame selection:text-white transition-colors duration-300">
       {/* Central Interactive Storytelling System: The Butterfly Effect */}
       <ButterflyDirector />
 
@@ -24,7 +24,7 @@ export default function Home() {
       <SiteHeader />
 
       {/* Main Exhibition Narrative Flow */}
-      <main id="main-content" className="flex-grow">
+      <main id="main-content" className="grow">
         {/* 1. Signature Hero: The First Small Movement (Dense & impactful) */}
         <Hero />
 
