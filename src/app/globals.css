@@ -1,26 +1,477 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Fluid Art & Portrait Palette (Obsidian Noir, Imperial Violet, Molten Amber Flame, Marbled Lavender) */
+  --color-canvas: #0E0716;
+  --color-surface: #170C22;
+  --color-surface-elevated: #221232;
+  --color-surface-card: #1A0D26;
+  --color-surface-hover: #2B163E;
+
+  /* Rich Imperial Purple & Violet */
+  --color-purple-deep: #3B165C;
+  --color-purple-regal: #5C237D;
+  --color-purple-vivid: #7928CA;
+  --color-purple-bright: #9538DC;
+  
+  /* Luminous Molten Amber & Fiery Flame */
+  --color-amber-ember: #D9481A;
+  --color-amber-flame: #FF662B;
+  --color-amber-vibrant: #FF7D3C;
+  --color-amber-glow: #FFA05E;
+  --color-amber-pale: #FFD2B8;
+
+  /* Soft Lavender-Mauve & Marbled Cream */
+  --color-lavender-mist: #EADCF5;
+  --color-lavender-soft: #D4BDE6;
+  --color-lavender-muted: #9E85B5;
+  --color-cream-pearl: #FAF4FD;
+
+  /* Surfaces & Inks */
+  --bg-canvas: #0E0716;
+  --bg-surface: #170C22;
+  --bg-surface-elevated: #221232;
+  --text-primary: #FAF4FD;
+  --text-secondary: #D4BDE6;
+  --text-muted: #9E85B5;
+  --border-subtle: rgba(212, 189, 230, 0.16);
+  --border-accent: rgba(255, 102, 43, 0.5);
+  --border-purple: rgba(121, 40, 202, 0.35);
+  --header-bg: rgba(14, 7, 22, 0.85);
+  --modal-bg: #140820;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* Light Mode: The last edit color palette (Porcelain Pearl, Velvet Amethyst, Royal Purple, Molten Amber Flame, Lilac Mist) */
+[data-theme="light"],
+.light {
+  --color-canvas: #FAF7FC;
+  --color-surface: #FFFFFF;
+  --color-surface-elevated: #F5EDFA;
+  --color-surface-card: #FFFFFF;
+  --color-surface-hover: #EFE3F5;
+
+  --color-purple-deep: #24093B;
+  --color-purple-regal: #4F1176;
+  --color-purple-vivid: #7928CA;
+  --color-purple-bright: #9538DC;
+  
+  --color-amber-ember: #D9481A;
+  --color-amber-flame: #FF662B;
+  --color-amber-vibrant: #FF7D3C;
+  --color-amber-glow: #FFA05E;
+  --color-amber-pale: #FFE0CE;
+
+  --color-lavender-mist: #F3EBF8;
+  --color-lavender-soft: #7D45C6;
+  --color-lavender-muted: #5C237D;
+  --color-cream-pearl: #24093B;
+
+  --bg-canvas: #FAF7FC;
+  --bg-surface: #FFFFFF;
+  --bg-surface-elevated: #F5EDFA;
+  --text-primary: #24093B;
+  --text-secondary: #4F1176;
+  --text-muted: #6B2D8C;
+  --border-subtle: rgba(79, 17, 118, 0.12);
+  --border-accent: rgba(255, 102, 43, 0.6);
+  --border-purple: rgba(121, 40, 202, 0.25);
+  --header-bg: rgba(250, 247, 252, 0.88);
+  --modal-bg: #FAF7FC;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+@theme {
+  --color-canvas: #0E0716;
+  --color-surface: #170C22;
+  --color-surface-elevated: #221232;
+  --color-surface-card: #1A0D26;
+  --color-surface-hover: #2B163E;
+  --color-purple-deep: #3B165C;
+  --color-purple-regal: #5C237D;
+  --color-purple-vivid: #7928CA;
+  --color-purple-bright: #9538DC;
+  --color-amber-ember: #D9481A;
+  --color-amber-flame: #FF662B;
+  --color-amber-vibrant: #FF7D3C;
+  --color-amber-glow: #FFA05E;
+  --color-amber-pale: #FFD2B8;
+  --color-lavender-mist: #EADCF5;
+  --color-lavender-soft: #D4BDE6;
+  --color-lavender-muted: #9E85B5;
+  --color-cream-pearl: #FAF4FD;
+  --font-serif: var(--font-cormorant), Georgia, serif;
+  --font-sans: var(--font-manrope), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  color: var(--text-primary);
+  background-color: var(--bg-canvas);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-canvas);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 1.0625rem; /* 17px comfortable body size */
+  line-height: 1.68;
+  overflow-x: hidden;
+  position: relative;
 }
+
+/* Subtle fluid art ambient grain */
+.paper-grain {
+  background-image: radial-gradient(rgba(255, 102, 43, 0.05) 1px, transparent 0);
+  background-size: 28px 28px;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #170C22;
+}
+::-webkit-scrollbar-thumb {
+  background: #5C237D;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #FF662B;
+}
+
+/* Selection */
+::selection {
+  background: #FF662B;
+  color: #FFFFFF;
+}
+
+/* Butterfly Wing Flap Animation Keyframes */
+@keyframes wingFlapForewingResting {
+  0%, 100% {
+    transform: rotateY(0deg) scaleX(1) rotateZ(0deg);
+  }
+  30% {
+    transform: rotateY(25deg) scaleX(0.85) rotateZ(2deg);
+  }
+  60% {
+    transform: rotateY(10deg) scaleX(0.95) rotateZ(-1deg);
+  }
+}
+
+@keyframes wingFlapHindwingResting {
+  0%, 100% {
+    transform: rotateY(0deg) scaleX(1) rotateZ(0deg);
+  }
+  35% {
+    transform: rotateY(20deg) scaleX(0.88) rotateZ(3deg);
+  }
+  65% {
+    transform: rotateY(8deg) scaleX(0.97) rotateZ(-1deg);
+  }
+}
+
+@keyframes wingFlapForewingHovering {
+  0%, 100% {
+    transform: rotateY(15deg) scaleX(0.92) rotateZ(-2deg);
+  }
+  50% {
+    transform: rotateY(55deg) scaleX(0.55) rotateZ(6deg);
+  }
+}
+
+@keyframes wingFlapHindwingHovering {
+  0%, 100% {
+    transform: rotateY(10deg) scaleX(0.94) rotateZ(-1deg);
+  }
+  50% {
+    transform: rotateY(48deg) scaleX(0.62) rotateZ(8deg);
+  }
+}
+
+@keyframes wingFlapForewingFlying {
+  0%, 100% {
+    transform: rotateY(0deg) scaleX(1) rotateZ(-4deg);
+  }
+  50% {
+    transform: rotateY(70deg) scaleX(0.32) rotateZ(10deg);
+  }
+}
+
+@keyframes wingFlapHindwingFlying {
+  0%, 100% {
+    transform: rotateY(5deg) scaleX(0.98) rotateZ(-2deg);
+  }
+  50% {
+    transform: rotateY(65deg) scaleX(0.40) rotateZ(12deg);
+  }
+}
+
+@keyframes bodyFlutter {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-2.5px) rotate(1deg);
+  }
+}
+
+/* Wing flap helper classes */
+.flap-forewing-resting {
+  animation: wingFlapForewingResting 3.8s ease-in-out infinite;
+  transform-style: preserve-3d;
+}
+
+.flap-hindwing-resting {
+  animation: wingFlapHindwingResting 3.8s ease-in-out infinite 0.12s;
+  transform-style: preserve-3d;
+}
+
+.flap-forewing-hovering {
+  animation: wingFlapForewingHovering 0.55s ease-in-out infinite alternate;
+  transform-style: preserve-3d;
+}
+
+.flap-hindwing-hovering {
+  animation: wingFlapHindwingHovering 0.55s ease-in-out infinite alternate 0.08s;
+  transform-style: preserve-3d;
+}
+
+.flap-forewing-flying {
+  animation: wingFlapForewingFlying 0.22s ease-in-out infinite alternate;
+  transform-style: preserve-3d;
+}
+
+.flap-hindwing-flying {
+  animation: wingFlapHindwingFlying 0.22s ease-in-out infinite alternate 0.04s;
+  transform-style: preserve-3d;
+}
+
+/* Connected Response: Reactive Wing Twitch for the Butterfly Effect */
+@keyframes wingFlapReactiveForewing {
+  0% {
+    transform: rotateY(0deg) scaleX(1) rotateZ(0deg);
+  }
+  30% {
+    transform: rotateY(52deg) scaleX(0.58) rotateZ(8deg);
+  }
+  60% {
+    transform: rotateY(20deg) scaleX(0.88) rotateZ(-2deg);
+  }
+  80% {
+    transform: rotateY(42deg) scaleX(0.68) rotateZ(6deg);
+  }
+  100% {
+    transform: rotateY(0deg) scaleX(1) rotateZ(0deg);
+  }
+}
+
+@keyframes wingFlapReactiveHindwing {
+  0% {
+    transform: rotateY(0deg) scaleX(1) rotateZ(0deg);
+  }
+  35% {
+    transform: rotateY(45deg) scaleX(0.65) rotateZ(9deg);
+  }
+  65% {
+    transform: rotateY(16deg) scaleX(0.92) rotateZ(-1deg);
+  }
+  85% {
+    transform: rotateY(36deg) scaleX(0.72) rotateZ(7deg);
+  }
+  100% {
+    transform: rotateY(0deg) scaleX(1) rotateZ(0deg);
+  }
+}
+
+.flap-forewing-reactive {
+  animation: wingFlapReactiveForewing 0.72s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  transform-style: preserve-3d;
+}
+
+.flap-hindwing-reactive {
+  animation: wingFlapReactiveHindwing 0.72s cubic-bezier(0.25, 1, 0.5, 1) 0.06s forwards;
+  transform-style: preserve-3d;
+}
+
+.body-flutter {
+  animation: bodyFlutter 0.44s ease-in-out infinite alternate;
+}
+
+/* Hand-drawn Path Stroke Dash Animation */
+@keyframes drawStroke {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.animate-draw-stroke {
+  animation: drawStroke 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+/* Empty Space Lavender Ripple Animations */
+@keyframes rippleExpand {
+  0% {
+    r: 6px;
+    opacity: 0.6;
+  }
+  100% {
+    r: 90px;
+    opacity: 0;
+  }
+}
+
+@keyframes rippleStroke {
+  0% {
+    r: 8px;
+    opacity: 0.85;
+    stroke-width: 1.6px;
+  }
+  100% {
+    r: 92px;
+    opacity: 0;
+    stroke-width: 0.3px;
+  }
+}
+
+.animate-ripple-expand {
+  animation: rippleExpand linear forwards;
+}
+
+.animate-ripple-stroke {
+  animation: rippleStroke cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* Motion Paused & Reduced Motion Accessibility Overrides */
+.motion-paused,
+.motion-paused *,
+@media (prefers-reduced-motion: reduce) {
+  .motion-paused *,
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@keyframes flyOut {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0) scale(0.6) rotate(var(--rot, 0deg));
+  }
+  15% {
+    opacity: 1;
+    transform: translate3d(calc(var(--vx, 40px) * 0.2), calc(var(--vy, -60px) * 0.2), 0) scale(1.1) rotate(calc(var(--rot, 0deg) + 6deg));
+  }
+  80% {
+    opacity: 0.95;
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(var(--vx, 100px), var(--vy, -200px), 0) scale(0.85) rotate(calc(var(--rot, 0deg) - 12deg));
+  }
+}
+
+.animate-flyOut {
+  animation: flyOut 2.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-33.333%, 0, 0);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 32s linear infinite;
+  will-change: transform;
+}
+
+@keyframes spinSlow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spinSlow 22s linear infinite;
+}
+
+/* Hide Next.js development indicator overlay button */
+nextjs-portal,
+[data-nextjs-dev-tools-button],
+[data-nextjs-toast],
+div[data-nextjs-root] {
+  display: none !important;
+}
+
+/* Ensure all images take their intrinsic width and height without distortion */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Pause animations when reduced-motion is requested or user clicked pause */
+body.motion-paused *,
+body.motion-paused *::before,
+body.motion-paused *::after,
+@media (prefers-reduced-motion: reduce) {
+  body:not(.motion-forced) *,
+  body:not(.motion-forced) *::before,
+  body:not(.motion-forced) *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* 3D Depth Utilities */
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+.perspective-1000 {
+  perspective: 1000px;
+}
+.translate-z-10 {
+  transform: translateZ(10px);
+}
+.translate-z-20 {
+  transform: translateZ(20px);
+}
+.translate-z-30 {
+  transform: translateZ(30px);
+}
+.translate-z-40 {
+  transform: translateZ(40px);
+}
+
+/* 3D Card Shadows */
+.shadow-3d-card {
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.4),
+              0 20px 40px -15px rgba(121, 40, 202, 0.2),
+              inset 0 1px 1px rgba(255, 255, 255, 0.12);
+}
+[data-theme="light"] .shadow-3d-card,
+.light .shadow-3d-card {
+  box-shadow: 0 12px 32px -10px rgba(36, 9, 59, 0.12),
+              0 24px 44px -16px rgba(121, 40, 202, 0.08),
+              inset 0 1px 1px rgba(255, 255, 255, 0.9);
+}
+
+/* Smooth transition when switching themes */
+body, header, section, footer, div, nav {
+  transition-property: background-color, border-color, color;
+  transition-duration: 0.25s;
+  transition-timing-function: ease-in-out;
+}
+
