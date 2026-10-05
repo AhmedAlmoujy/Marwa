@@ -26,9 +26,12 @@ export const CursorButterfly: React.FC<CursorButterflyProps> = ({
     currentY: -200,
     targetX: -200,
     targetY: -200,
+    mouseX: -200,
+    mouseY: -200,
     vx: 0,
     vy: 0,
     rotation: 0,
+    scaleX: 1,
     lastMovingTime: 0,
   });
 
@@ -55,6 +58,8 @@ export const CursorButterfly: React.FC<CursorButterflyProps> = ({
       posRef.current.currentY = y;
       posRef.current.targetX = x;
       posRef.current.targetY = y;
+      posRef.current.mouseX = x;
+      posRef.current.mouseY = y;
       setIsActive(true);
       setState('hovering');
     };
@@ -70,15 +75,17 @@ export const CursorButterfly: React.FC<CursorButterflyProps> = ({
     (e: PointerEvent) => {
       if (isPaused || prefersReducedMotion || !isFinePointer) return;
 
-      // Keep offset so pointer cursor is completely visible and unobstructed
+      posRef.current.mouseX = e.clientX;
+      posRef.current.mouseY = e.clientY;
+
+      // Position butterfly slightly behind / off to side of cursor so pointer stays visible
       const targetX = e.clientX + offsetDistance;
-      const targetY = e.clientY - offsetDistance * 0.85;
+      const targetY = e.clientY - offsetDistance * 0.75;
 
       posRef.current.targetX = targetX;
       posRef.current.targetY = targetY;
       posRef.current.lastMovingTime = performance.now();
 
-      // If user moved mouse before hero sequence finished or in other sessions, activate
       if (!isActive && posRef.current.currentX < 0) {
         posRef.current.currentX = targetX;
         posRef.current.currentY = targetY;
@@ -109,7 +116,7 @@ export const CursorButterfly: React.FC<CursorButterflyProps> = ({
       if (!isPaused && isActive && containerRef.current) {
         const p = posRef.current;
 
-        // Spring-like lerp lag (stiffness ~ 9.0)
+        // Spring-like lerp lag
         const spring = 8.5;
         const dx = p.targetX - p.currentX;
         const dy = p.targetY - p.currentY;
@@ -118,15 +125,22 @@ export const CursorButterfly: React.FC<CursorButterflyProps> = ({
         p.currentX += dx * spring * dt;
         p.currentY += dy * spring * dt;
 
-        // Bank gently into turns (calculate banking angle from velocity)
-        if (speed > 1.5) {
-          const moveAngle = Math.atan2(dy, dx) * (180 / Math.PI);
-          // Bound banking tilt between -28deg and +28deg
-          const targetBank = Math.max(-28, Math.min(28, (moveAngle - 45) * 0.35));
-          p.rotation += (targetBank - p.rotation) * 6.0 * dt;
-        } else {
-          // Gently return to level hover
-          p.rotation += (0 - p.rotation) * 3.5 * dt;
+        // Calculate angle pointing directly towards mouse cursor target (so butterfly faces mouse)
+        const toMouseX = p.mouseX - p.currentX;
+        const toMouseY = p.mouseY - p.currentY;
+        const distToMouse = Math.hypot(toMouseX, toMouseY);
+
+        if (distToMouse > 2) {
+          // Angle in degrees facing mouse
+          const moveAngle = Math.atan2(toMouseY, toMouseX) * (180 / Math.PI);
+          // Butterfly SVG head is top-right (+45deg offset), so target rotation faces cursor:
+          const targetRotation = moveAngle + 45;
+
+          // Smoothly interpolate rotation angle
+          let diff = (targetRotation - p.rotation) % 360;
+          if (diff > 180) diff -= 360;
+          if (diff < -180) diff += 360;
+          p.rotation += diff * 8.0 * dt;
         }
 
         // Apply hardware-accelerated transform to butterfly container

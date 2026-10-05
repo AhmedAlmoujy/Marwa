@@ -34,15 +34,14 @@ export const FlightPathReveal: React.FC<FlightPathRevealProps> = ({
     const container = containerRef.current;
     if (!container) return;
 
-    // Use IntersectionObserver to trigger when section transition enters viewport
+    let animFrameId: number;
+
     const observer = new IntersectionObserver(
       (entries) => {
         const [entry] = entries;
-        if (entry.isIntersecting && !hasRevealed) {
+        if (entry.isIntersecting) {
           setHasRevealed(true);
-          observer.unobserve(container);
 
-          // Animate flight along path
           const path = pathRef.current;
           const butterfly = butterflyRef.current;
           if (!path || !butterfly) return;
@@ -52,7 +51,7 @@ export const FlightPathReveal: React.FC<FlightPathRevealProps> = ({
           path.style.strokeDashoffset = `${pathLength}`;
 
           const startTime = performance.now();
-          const duration = 1200; // ms
+          const duration = 1400; // ms
 
           const step = (now: number) => {
             const elapsed = now - startTime;
@@ -67,19 +66,31 @@ export const FlightPathReveal: React.FC<FlightPathRevealProps> = ({
             butterfly.style.transform = `translate3d(${point.x}px, ${point.y}px, 0)`;
 
             if (progress < 1) {
-              requestAnimationFrame(step);
+              animFrameId = requestAnimationFrame(step);
             }
           };
 
-          requestAnimationFrame(step);
+          animFrameId = requestAnimationFrame(step);
+        } else {
+          // Reset when scrolled out of view so it plays again on re-entry
+          setHasRevealed(false);
+          if (animFrameId) cancelAnimationFrame(animFrameId);
+          const path = pathRef.current;
+          if (path) {
+            const pathLength = path.getTotalLength();
+            path.style.strokeDashoffset = `${pathLength}`;
+          }
         }
       },
-      { threshold: 0.25 }
+      { threshold: 0.2 }
     );
 
     observer.observe(container);
-    return () => observer.disconnect();
-  }, [hasRevealed, prefersReducedMotion, isPaused]);
+    return () => {
+      observer.disconnect();
+      if (animFrameId) cancelAnimationFrame(animFrameId);
+    };
+  }, [prefersReducedMotion, isPaused]);
 
   if (prefersReducedMotion) return null;
 
@@ -91,42 +102,60 @@ export const FlightPathReveal: React.FC<FlightPathRevealProps> = ({
     <div
       ref={containerRef}
       id={id}
-      className={`relative w-full max-w-4xl mx-auto py-1 sm:py-2 pointer-events-none overflow-visible flex flex-col items-center justify-center opacity-70 transition-opacity duration-700 ${
-        hasRevealed ? 'opacity-85' : 'opacity-0'
+      className={`relative w-full max-w-5xl mx-auto py-3 sm:py-5 pointer-events-none overflow-visible flex flex-col items-center justify-center transition-opacity duration-700 ${
+        hasRevealed ? 'opacity-90' : 'opacity-0'
       } ${className}`}
       aria-hidden="true"
     >
-      <div className="relative w-full h-8 sm:h-10">
+      <div className="relative w-full h-12 sm:h-16 flex items-center justify-between">
+        {/* Perched butterfly at origin (start of curve) */}
+        <div className="absolute left-2 sm:left-6 top-0 z-20 transform -translate-y-1/2 flex items-center gap-2">
+          <Butterfly
+            variant="profile"
+            state="resting"
+            size={28}
+            strokeColor={strokeColor}
+            accentColor="#FF662B"
+            fillOpacity={0.25}
+            registerAsTarget={true}
+          />
+          {label && (
+            <span className="font-serif italic text-sm sm:text-base text-amber-vibrant tracking-wide font-normal -mt-2">
+              {label}
+            </span>
+          )}
+        </div>
+
         <svg
           className="w-full h-full overflow-visible"
-          viewBox="0 0 600 60"
+          viewBox="0 0 700 70"
           fill="none"
           preserveAspectRatio="none"
         >
-          {/* Subtle curved flight path */}
+          {/* Elegant hand-drawn curving flight path */}
           <path
             ref={pathRef}
             d={
               isLtr
-                ? 'M20,45 C150,10 320,55 580,20'
-                : 'M580,45 C450,10 280,55 20,20'
+                ? 'M15,50 C180,15 360,60 680,25'
+                : 'M680,50 C500,15 320,60 15,25'
             }
             stroke={strokeColor}
-            strokeWidth="1.2"
-            strokeDasharray="4 4"
+            strokeWidth="1.5"
+            strokeDasharray="5 5"
             strokeLinecap="round"
             style={{
-              transition: 'stroke-dashoffset 1.2s cubic-bezier(0.25, 1, 0.5, 1)',
+              transition: 'stroke-dashoffset 1.4s cubic-bezier(0.25, 1, 0.5, 1)',
             }}
           />
         </svg>
 
-        {/* Small traveling butterfly */}
+        {/* Small traveling flight butterfly */}
         <div
           ref={butterflyRef}
-          className="absolute top-0 left-0 transition-opacity duration-500"
+          className="absolute top-0 left-0 transition-opacity duration-500 z-10"
           style={{
-            transform: isLtr ? 'translate3d(20px, 45px, 0)' : 'translate3d(580px, 45px, 0)',
+            transform: isLtr ? 'translate3d(15px, 50px, 0)' : 'translate3d(680px, 50px, 0)',
             opacity: hasRevealed ? 1 : 0,
           }}
         >
@@ -134,7 +163,7 @@ export const FlightPathReveal: React.FC<FlightPathRevealProps> = ({
             <Butterfly
               variant="flutter"
               state={hasRevealed ? 'hovering' : 'resting'}
-              size={22}
+              size={24}
               strokeColor={strokeColor}
               accentColor="#FF662B"
               fillOpacity={0.2}
@@ -143,12 +172,6 @@ export const FlightPathReveal: React.FC<FlightPathRevealProps> = ({
           </div>
         </div>
       </div>
-
-      {label && (
-        <span className="text-[10px] font-mono tracking-[0.25em] uppercase text-amber-vibrant mt-1 opacity-75">
-          {label}
-        </span>
-      )}
     </div>
   );
 };

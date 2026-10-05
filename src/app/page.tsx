@@ -1,7 +1,6 @@
 import React from 'react';
 import { SiteHeader } from '@/components/SiteHeader';
 import { Hero } from '@/components/Hero';
-import { KineticMarquee } from '@/components/KineticMarquee';
 import { ExhibitionWallSection } from '@/components/ExhibitionWallSection';
 import { WorkGallery } from '@/components/WorkGallery';
 import { VerifiedArchivesSection } from '@/components/VerifiedArchivesSection';
@@ -28,15 +27,12 @@ export default function Home() {
         {/* 1. Signature Hero: The First Small Movement (Dense & impactful) */}
         <Hero />
 
-        {/* Compact Flight Path Reveal: Hero → Selected Works */}
+        {/* Curved Flight Path Reveal: Hero → Graduation Project / Selected Works */}
         <FlightPathReveal
           id="path-hero-to-work"
           direction="left-to-right"
-          label="The Butterfly Effect // From Internal Vision to Printed Impression"
+          label="Follow the butterfly"
         />
-
-        {/* Kinetic Typographic Ribbon */}
-        <KineticMarquee />
 
         {/* Virtual 7-Meter Graduation Exhibition Wall Walkthrough */}
         <ExhibitionWallSection />
@@ -48,11 +44,8 @@ export default function Home() {
         <FlightPathReveal
           id="path-work-to-archives"
           direction="right-to-left"
-          label="Direct Archives // Verified Source Folders & Drive Repositories"
+          label="Follow the butterfly"
         />
-
-        {/* Inverted Kinetic Ribbon for Dark Transition */}
-        <KineticMarquee inverted />
 
         {/* Direct Archive Sources / Verified Portfolio & Work Links in the Middle */}
         <VerifiedArchivesSection />

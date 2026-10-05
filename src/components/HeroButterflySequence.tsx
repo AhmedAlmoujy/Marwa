@@ -46,19 +46,18 @@ export const HeroButterflySequence: React.FC<HeroButterflySequenceProps> = ({
     const heroSection = portraitEl.closest('section');
     const heroRect = heroSection?.getBoundingClientRect() || portraitRect;
 
-    // Artwork edge within Marwa's photo (top-left artwork on exhibition wall):
-    // ~28% from left of photo, ~17% from top of photo
-    const originX = portraitRect.left - heroRect.left + portraitRect.width * 0.28;
-    const originY = portraitRect.top - heroRect.top + portraitRect.height * 0.17;
+    // Artwork edge on upper-left background aura of Marwa's photo:
+    const originX = portraitRect.left - heroRect.left - 35;
+    const originY = portraitRect.top - heroRect.top - 25;
 
-    // Target beside the headline word accent
+    // Target beside the headline word accent (above letter n)
     let targetX = heroRect.width * 0.22;
     let targetY = heroRect.height * 0.36;
 
     if (headlineEl) {
       const headRect = headlineEl.getBoundingClientRect();
-      targetX = headRect.right - heroRect.left - 50;
-      targetY = headRect.top - heroRect.top + 8;
+      targetX = headRect.right - heroRect.left - 5;
+      targetY = headRect.top - heroRect.top + 40;
     }
 
     // Midpoints for natural curved flight path
