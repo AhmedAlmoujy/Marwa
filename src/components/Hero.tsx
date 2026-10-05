@@ -66,7 +66,7 @@ export const Hero: React.FC = () => {
                 />
               </svg>
               {/* Connected decorative accent butterfly perched lower over letter n to its right */}
-              <span className="absolute -top-2 sm:-top-3 md:-top-3.5 -right-3 sm:-right-4 hidden md:inline-block pointer-events-none transform -rotate-12 -scale-x-100">
+              <span className="absolute top-0.5 sm:top-1 md:top-1.5 -right-2 sm:-right-3 hidden md:inline-block pointer-events-none transform -rotate-12 -scale-x-100">
                 <Butterfly
                   id="hero-perched-butterfly"
                   variant="profile"
