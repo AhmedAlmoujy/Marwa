@@ -33,7 +33,7 @@ export const Hero: React.FC = () => {
           <div className="flex items-center gap-3 mb-2.5">
             <span className="w-8 h-0.5 bg-amber-flame" />
             <span className="text-xs md:text-sm font-semibold tracking-[0.2em] uppercase text-amber-vibrant">
-              Marwa El-Bahnsawy — Artist &amp; Graphic Designer
+              Marwa El-Bahnsawy — Artist · Graphic Designer · Printmaker
             </span>
           </div>
 
@@ -114,7 +114,7 @@ export const Hero: React.FC = () => {
               onClick={() => setIsReadMoreOpen(!isReadMoreOpen)}
               className="inline-flex items-center gap-1.5 mt-2 text-xs md:text-sm font-medium text-amber-vibrant hover:text-amber-glow transition-colors focus:outline-none group cursor-pointer hover:underline underline-offset-4"
             >
-              <span>{isReadMoreOpen ? '( read less )' : '( read more -> )'}</span>
+              <span>{isReadMoreOpen ? 'read less' : 'read more ->'}</span>
             </button>
           </div>
 
@@ -219,7 +219,7 @@ export const Hero: React.FC = () => {
               </div>
               <div>
                 <span className="font-semibold text-amber-vibrant uppercase tracking-wider text-[10px]">Core Craft: </span>
-                <span className="text-(--text-secondary)">Printed Design &amp; Brand Identity</span>
+                <span className="text-(--text-secondary)">Artist · Graphic Designer · Printmaker</span>
               </div>
               <div>
                 <span className="font-semibold text-amber-vibrant uppercase tracking-wider text-[10px]">Location: </span>

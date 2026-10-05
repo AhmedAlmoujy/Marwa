@@ -125,26 +125,21 @@ export const CursorButterfly: React.FC<CursorButterflyProps> = ({
         p.currentX += dx * spring * dt;
         p.currentY += dy * spring * dt;
 
-        // Calculate angle pointing directly towards mouse cursor target (so butterfly faces mouse)
-        const toMouseX = p.mouseX - p.currentX;
-        const toMouseY = p.mouseY - p.currentY;
-        const distToMouse = Math.hypot(toMouseX, toMouseY);
-
-        if (distToMouse > 2) {
-          // Angle in degrees facing mouse
-          const moveAngle = Math.atan2(toMouseY, toMouseX) * (180 / Math.PI);
-          // Butterfly SVG head is top-right (+45deg offset), so target rotation faces cursor:
-          const targetRotation = moveAngle + 45;
-
-          // Smoothly interpolate rotation angle
-          let diff = (targetRotation - p.rotation) % 360;
-          if (diff > 180) diff -= 360;
-          if (diff < -180) diff += 360;
-          p.rotation += diff * 8.0 * dt;
+        // Gentle banking rotation based on movement direction
+        if (speed > 1.5) {
+          const moveAngle = Math.atan2(dy, dx) * (180 / Math.PI);
+          const targetBank = Math.max(-20, Math.min(20, (moveAngle - 45) * 0.3));
+          p.rotation += (targetBank - p.rotation) * 6.0 * dt;
+        } else {
+          p.rotation += (0 - p.rotation) * 4.0 * dt;
         }
 
+        // Face towards mouse cursor horizontally (left vs right)
+        const targetScaleX = p.mouseX < p.currentX ? -1 : 1;
+        p.scaleX += (targetScaleX - p.scaleX) * 8.0 * dt;
+
         // Apply hardware-accelerated transform to butterfly container
-        containerRef.current.style.transform = `translate3d(${p.currentX.toFixed(1)}px, ${p.currentY.toFixed(1)}px, 0) rotate(${p.rotation.toFixed(1)}deg)`;
+        containerRef.current.style.transform = `translate3d(${p.currentX.toFixed(1)}px, ${p.currentY.toFixed(1)}px, 0) rotate(${p.rotation.toFixed(1)}deg) scaleX(${p.scaleX.toFixed(2)})`;
 
         // Emit trail points periodically when moving
         trailEmitCounter++;
@@ -152,8 +147,8 @@ export const CursorButterfly: React.FC<CursorButterflyProps> = ({
           window.dispatchEvent(
             new CustomEvent('marwa:trail-point', {
               detail: {
-                x: p.currentX + 16,
-                y: p.currentY + 16,
+                x: p.currentX + 14,
+                y: p.currentY + 14,
                 dx,
                 dy,
               },
@@ -186,19 +181,14 @@ export const CursorButterfly: React.FC<CursorButterflyProps> = ({
 
   if (!isFinePointer || prefersReducedMotion || !isActive) return null;
 
-  const isDark = theme === 'dark';
-  const strokeColor = '#D46835';
-  const accentColor = '#D46835';
-
   return (
     <div
       ref={containerRef}
       className="fixed top-0 left-0 pointer-events-none z-35 will-change-transform"
       style={{
         transform: `translate3d(${posRef.current.currentX}px, ${posRef.current.currentY}px, 0)`,
-        filter: isDark
-          ? 'drop-shadow(0 6px 14px rgba(212, 104, 53, 0.45)) drop-shadow(0 0 10px rgba(212, 104, 53, 0.35))'
-          : 'drop-shadow(0 4px 12px rgba(212, 104, 53, 0.4)) drop-shadow(0 0 8px rgba(212, 104, 53, 0.25))',
+        filter:
+          'drop-shadow(0 4px 12px rgba(255, 102, 43, 0.35)) drop-shadow(0 0 8px rgba(212, 189, 230, 0.3))',
       }}
       aria-hidden="true"
     >
@@ -206,11 +196,11 @@ export const CursorButterfly: React.FC<CursorButterflyProps> = ({
         <Butterfly
           variant="profile"
           state={state}
-          size={42}
-          strokeColor={strokeColor}
-          accentColor={accentColor}
-          bold={true}
-          fillOpacity={0.22}
+          size={28}
+          strokeColor="#D4BDE6"
+          accentColor="#FF662B"
+          bold={false}
+          fillOpacity={0.28}
           withSparkles={false}
           registerAsTarget={false}
         />

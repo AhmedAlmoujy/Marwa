@@ -61,7 +61,7 @@ export const SiteHeader: React.FC = () => {
               Marwa El-Bahnsawy
             </span>
             <span className="text-[10px] tracking-widest uppercase text-(--text-muted) font-sans font-medium">
-              Graphic Designer & Artist
+              Artist · Graphic Designer · Printmaker
             </span>
           </div>
         </Link>
