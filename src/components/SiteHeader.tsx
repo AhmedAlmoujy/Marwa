@@ -2,14 +2,9 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { useMotion } from '@/context/MotionContext';
-import { useTheme } from '@/context/ThemeContext';
-import { Butterfly } from './Butterfly';
-import { Play, Pause, Menu, X, Sun, Moon } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 
 export const SiteHeader: React.FC = () => {
-  const { isPaused, togglePause } = useMotion();
-  const { theme, toggleTheme } = useTheme();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -46,22 +41,13 @@ export const SiteHeader: React.FC = () => {
             <span className="font-serif italic text-base font-semibold leading-none text-amber-vibrant">
               M
             </span>
-            <div className="absolute -top-2.5 -right-2.5 transition-transform duration-300 group-hover:scale-125 group-hover:-translate-y-0.5">
-              <Butterfly
-                variant="angled"
-                state="resting"
-                size={18}
-                strokeColor={theme === 'dark' ? '#D4BDE6' : '#7928CA'}
-                accentColor="#FF662B"
-              />
-            </div>
           </div>
           <div className="flex flex-col">
             <span className="font-serif text-lg tracking-wide font-medium leading-tight group-hover:text-amber-vibrant transition-colors">
               Marwa El-Bahnsawy
             </span>
             <span className="text-[10px] tracking-widest uppercase text-(--text-muted) font-sans font-medium">
-              Artist · Graphic Designer · Printmaker
+              Artist · Graphic Designer
             </span>
           </div>
         </Link>
@@ -91,64 +77,10 @@ export const SiteHeader: React.FC = () => {
               </svg>
             </Link>
           ))}
-
-          {/* Light / Dark Mode Toggle */}
-          <button
-            onClick={toggleTheme}
-            aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-            title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-(--border-subtle) hover:border-amber-flame bg-(--bg-surface) text-xs font-medium text-(--text-primary) transition-all duration-200 hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-flame"
-          >
-            {theme === 'dark' ? (
-              <>
-                <Sun size={13} className="text-amber-vibrant" />
-                <span className="text-[11px] font-medium">Light</span>
-              </>
-            ) : (
-              <>
-                <Moon size={13} className="text-purple-vivid" />
-                <span className="text-[11px] font-medium">Dark</span>
-              </>
-            )}
-          </button>
-
-          {/* Pause / Resume Animation Control (Accessibility) */}
-          <button
-            onClick={togglePause}
-            aria-label={isPaused ? 'Resume website animations' : 'Pause website animations'}
-            title={isPaused ? 'Resume website animations' : 'Pause website animations'}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-(--border-subtle) hover:border-amber-flame bg-(--bg-surface) text-xs font-medium text-(--text-primary) transition-all duration-200 hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-flame"
-          >
-            {isPaused ? (
-              <>
-                <Play size={12} className="text-amber-vibrant fill-amber-vibrant" />
-                <span className="text-[11px]">Play</span>
-              </>
-            ) : (
-              <>
-                <Pause size={12} className="text-amber-vibrant" />
-                <span className="text-[11px]">Pause</span>
-              </>
-            )}
-          </button>
         </nav>
 
         {/* Mobile Controls */}
         <div className="flex md:hidden items-center gap-2">
-          <button
-            onClick={toggleTheme}
-            aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-            className="p-2 rounded-full border border-(--border-subtle) bg-(--bg-surface) text-(--text-primary) text-xs"
-          >
-            {theme === 'dark' ? <Sun size={14} className="text-amber-vibrant" /> : <Moon size={14} className="text-purple-vivid" />}
-          </button>
-          <button
-            onClick={togglePause}
-            aria-label={isPaused ? 'Resume animations' : 'Pause animations'}
-            className="p-2 rounded-full border border-(--border-subtle) bg-(--bg-surface) text-amber-vibrant text-xs"
-          >
-            {isPaused ? <Play size={14} /> : <Pause size={14} />}
-          </button>
           <button
             onClick={() => setMobileMenuOpen((prev) => !prev)}
             aria-label={mobileMenuOpen ? 'Close Navigation Menu' : 'Open Navigation Menu'}

@@ -82,19 +82,6 @@ export const VerifiedArchivesSection: React.FC = () => {
                     Open Archive &rarr;
                   </span>
                 </div>
-
-                {/* Decorative micro butterfly in corner of first card */}
-                {idx === 0 && (
-                  <div className="absolute -top-2.5 -right-2.5 pointer-events-none opacity-80 group-hover:scale-110 transition-transform">
-                    <Butterfly
-                      variant="flutter"
-                      state="resting"
-                      size={20}
-                      strokeColor="#D4BDE6"
-                      accentColor="#FF662B"
-                    />
-                  </div>
-                )}
               </a>
             </TiltCard3D>
           );

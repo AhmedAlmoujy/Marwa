@@ -3,7 +3,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { Project, getAssetMetrics } from '@/data/portfolioData';
-import { Butterfly } from './Butterfly';
 import { X, ChevronLeft, ChevronRight, Maximize2, Minimize2, ExternalLink } from 'lucide-react';
 
 interface ProjectDetailModalProps {
@@ -124,25 +123,32 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
             )}
           </button>
 
-          {/* Multi-image thumbnail strip (if gallery has > 1 images) */}
+          {/* Multi-image thumbnail strip (Complete rectangular cards, not circles) */}
           {project.galleryImages.length > 1 && (
-            <div className="absolute bottom-4 right-4 z-20 flex items-center gap-2 max-w-50 overflow-x-auto p-1 bg-(--bg-surface)/90 backdrop-blur-md rounded-full border border-(--border-subtle)">
+            <div className="absolute bottom-4 right-4 z-20 flex items-center gap-2 max-w-[calc(100%-8rem)] overflow-x-auto p-1.5 bg-(--bg-surface)/95 backdrop-blur-md rounded-xl border border-(--border-subtle) shadow-md">
               {project.galleryImages.map((img, idx) => {
                 const thumbDims = getAssetMetrics(img);
+                const isVertical = thumbDims.aspectRatio < 0.9;
                 return (
                   <button
                     key={img}
                     onClick={() => setActiveImageIndex(idx)}
-                    className={`w-7 h-7 rounded-full overflow-hidden border-2 transition-transform ${
+                    className={`relative rounded-lg overflow-hidden border-2 transition-all duration-200 bg-(--bg-canvas) shrink-0 ${
+                      isVertical ? 'h-12 w-8 sm:h-14 sm:w-9' : 'h-10 w-14 sm:h-12 sm:w-16'
+                    } ${
                       activeImageIndex === idx
-                        ? 'border-amber-flame scale-110'
-                        : 'border-transparent opacity-60 hover:opacity-100'
+                        ? 'border-amber-flame ring-2 ring-amber-flame/30 scale-105 opacity-100 shadow-sm'
+                        : 'border-(--border-subtle) opacity-65 hover:opacity-100 hover:border-amber-flame/60'
                     }`}
                     aria-label={`View image ${idx + 1}`}
                   >
-                    <div className="relative w-full h-full">
-                      <Image src={img} alt="" width={thumbDims.width} height={thumbDims.height} className="w-full h-full object-cover" />
-                    </div>
+                    <Image
+                      src={img}
+                      alt=""
+                      fill
+                      sizes="80px"
+                      className="object-contain p-0.5"
+                    />
                   </button>
                 );
               })}
@@ -179,8 +185,8 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
         {/* Right Side: Editorial Curatorial Details */}
         <div className="w-full md:w-2/5 p-6 md:p-8 flex flex-col justify-between overflow-y-auto bg-(--bg-surface)">
           <div>
-            {/* Category & Year Tag */}
-            <div className="flex items-center justify-between mb-4">
+            {/* Category & Year Tag - Placed safely to avoid any overlap with close button */}
+            <div className="flex items-center gap-3 mb-4 pr-12">
               <span className="text-xs font-semibold tracking-wider uppercase text-amber-vibrant bg-amber-flame/15 px-3 py-1 rounded-full border border-amber-flame/30">
                 {project.category}
               </span>
@@ -258,15 +264,6 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
                 <ChevronRight size={16} />
               </button>
             </div>
-
-            {/* Delicate corner decorative butterfly */}
-            <Butterfly
-              variant="profile"
-              state="resting"
-              size={24}
-              strokeColor="#D4BDE6"
-              accentColor="#FF662B"
-            />
           </div>
         </div>
       </div>

@@ -1,12 +1,11 @@
 'use client';
 
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useMemo } from 'react';
 import Image from 'next/image';
 import { Project, PROJECTS, getAssetMetrics } from '@/data/portfolioData';
 import { ProjectDetailModal } from './ProjectDetailModal';
 import { Butterfly } from './Butterfly';
 import { ChevronLeft, ChevronRight, Eye, Sparkles } from 'lucide-react';
-
 import { TiltCard3D } from './TiltCard3D';
 
 export const ExhibitionWallSection: React.FC = () => {
@@ -14,8 +13,32 @@ export const ExhibitionWallSection: React.FC = () => {
   const [selectedPlate, setSelectedPlate] = useState<Project | null>(null);
   const [hoveredPlateId, setHoveredPlateId] = useState<string | null>(null);
 
-  // Filter the 8 graduation plates + exhibition view
-  const graduationPlates = PROJECTS.filter((p) => p.categorySlug === 'graduation');
+  // Filter the 8 authentic graduation plates and number them 1 to 8 starting from the left
+  const graduationPlates = useMemo(() => {
+    const plates = PROJECTS.filter((p) => p.categorySlug === 'graduation' && p.id !== 'grad-exhibition');
+    const currentOrder = [...plates].reverse();
+    return currentOrder.map((plate, index) => {
+      const rawTitle = plate.title.replace(/^Plate \d\/\d:\s*/, '');
+      return {
+        ...plate,
+        title: `Plate ${index + 1}/8: ${rawTitle}`,
+      };
+    });
+  }, []);
+
+  const handleNextPlate = () => {
+    if (!selectedPlate) return;
+    const currentIndex = graduationPlates.findIndex((p) => p.id === selectedPlate.id);
+    const nextIndex = (currentIndex + 1) % graduationPlates.length;
+    setSelectedPlate(graduationPlates[nextIndex]);
+  };
+
+  const handlePrevPlate = () => {
+    if (!selectedPlate) return;
+    const currentIndex = graduationPlates.findIndex((p) => p.id === selectedPlate.id);
+    const prevIndex = (currentIndex - 1 + graduationPlates.length) % graduationPlates.length;
+    setSelectedPlate(graduationPlates[prevIndex]);
+  };
 
   const scroll = (direction: 'left' | 'right') => {
     if (scrollContainerRef.current) {
@@ -25,15 +48,7 @@ export const ExhibitionWallSection: React.FC = () => {
   };
 
   return (
-    <section className="py-8 md:py-12 bg-surface-elevated border-y border-(--border-subtle) relative overflow-hidden transition-colors duration-300">
-      {/* Delicate background ambient butterflies */}
-      <div className="absolute top-10 left-10 pointer-events-none opacity-40">
-        <Butterfly variant="profile" state="resting" size={38} strokeColor="#D4BDE6" accentColor="#FF662B" />
-      </div>
-      <div className="absolute bottom-10 right-10 pointer-events-none opacity-40">
-        <Butterfly variant="flutter" state="hovering" size={42} strokeColor="#FF7D3C" accentColor="#D4BDE6" />
-      </div>
-
+    <section id="graduation-wall" className="py-8 md:py-12 bg-surface-elevated border-y border-(--border-subtle) relative overflow-hidden transition-colors duration-300 scroll-mt-20">
       <div className="max-w-7xl mx-auto px-6 md:px-12 mb-4">
         <div className="flex flex-col md:flex-row md:items-end justify-between">
           <div>
@@ -81,6 +96,7 @@ export const ExhibitionWallSection: React.FC = () => {
         {graduationPlates.map((plate, index) => {
           const isHovered = hoveredPlateId === plate.id;
           const imgMetrics = getAssetMetrics(plate.coverImage);
+          const plateLabel = `PLATE ${index + 1}/8`;
 
           return (
             <div
@@ -107,28 +123,12 @@ export const ExhibitionWallSection: React.FC = () => {
 
                     {/* Spot Lighting Vignette Effect */}
                     <div className="absolute inset-0 bg-radial-gradient from-transparent via-transparent to-black/25 pointer-events-none" />
-
-                    {/* 3D Floating perched butterfly that lifts up on hover */}
-                    <div
-                      style={{ transform: 'translateZ(30px)' }}
-                      className={`absolute -top-3 -right-3 pointer-events-none transition-all duration-500 z-20 ${
-                        isHovered ? 'scale-125 opacity-100 -translate-y-2' : 'scale-90 opacity-70'
-                      }`}
-                    >
-                      <Butterfly
-                        variant={index % 2 === 0 ? 'profile' : 'angled'}
-                        state={isHovered ? 'flying' : 'resting'}
-                        size={32}
-                        strokeColor="#D4BDE6"
-                        accentColor="#FF662B"
-                      />
-                    </div>
                   </div>
 
                   {/* Museum Gallery Wall Label (Plaque) */}
                   <div style={{ transform: 'translateZ(15px)' }} className="mt-4 pt-3 border-t border-(--border-subtle) flex flex-col">
-                    <div className="flex items-center justify-between text-[11px] text-amber-vibrant font-mono">
-                      <span>PLATE {index === 0 ? 'OVERVIEW' : `${index}/8`}</span>
+                    <div className="flex items-center justify-between text-[11px] text-amber-vibrant font-mono font-medium">
+                      <span>{plateLabel}</span>
                       <span>2024</span>
                     </div>
                     <h3 className="font-serif text-base text-(--text-primary) font-normal leading-snug mt-1 group-hover:text-amber-vibrant transition-colors">
@@ -145,10 +145,31 @@ export const ExhibitionWallSection: React.FC = () => {
         })}
       </div>
 
+      {/* Subtle Bottom Flipped Butterfly and Transformation Quote */}
+      <div className="max-w-7xl mx-auto px-6 md:px-12 mt-6 pt-4 border-t border-(--border-subtle)/60 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <p className="font-sans text-xs md:text-sm text-(--text-secondary) leading-relaxed max-w-2xl italic">
+          &ldquo;Every idea goes through its own transformation — from a first thought, through exploration, until it takes its final form. Let&apos;s discover what your idea can become.&rdquo;
+        </p>
+
+        {/* Flipped butterfly on the right facing left towards the quote */}
+        <div className="shrink-0 flex items-center gap-2 transform -scale-x-100">
+          <Butterfly
+            variant="profile"
+            state="hovering"
+            size={32}
+            strokeColor="#D4BDE6"
+            accentColor="#FF662B"
+            fillOpacity={0.25}
+          />
+        </div>
+      </div>
+
       {/* Modal for inspect */}
       <ProjectDetailModal
         project={selectedPlate}
         onClose={() => setSelectedPlate(null)}
+        onNext={handleNextPlate}
+        onPrev={handlePrevPlate}
       />
     </section>
   );

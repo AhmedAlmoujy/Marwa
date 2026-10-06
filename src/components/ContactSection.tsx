@@ -34,9 +34,9 @@ export const ContactSection: React.FC = () => {
       <div className="absolute top-0 left-1/4 w-72 h-72 bg-purple-vivid/15 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-6 right-1/4 w-60 h-60 bg-amber-flame/12 rounded-full blur-3xl pointer-events-none" />
 
-      {/* Contact Finale: Balanced 3-Butterfly Gathering */}
+      {/* Contact Finale: Balanced 3-Butterfly Gathering - Facing Left */}
       <div className="absolute top-6 right-8 md:right-24 pointer-events-none opacity-90 transition-all duration-700">
-        <div className="relative">
+        <div className="relative transform -scale-x-100">
           {/* Butterfly 1: Primary graceful herald */}
           <div
             className={`transition-transform duration-700 ease-out ${

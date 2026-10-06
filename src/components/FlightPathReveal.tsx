@@ -10,6 +10,7 @@ interface FlightPathRevealProps {
   className?: string;
   direction?: 'left-to-right' | 'right-to-left';
   label?: string;
+  align?: 'left' | 'right';
 }
 
 export const FlightPathReveal: React.FC<FlightPathRevealProps> = ({
@@ -17,6 +18,7 @@ export const FlightPathReveal: React.FC<FlightPathRevealProps> = ({
   className = '',
   direction = 'left-to-right',
   label,
+  align = 'left',
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const pathRef = useRef<SVGPathElement>(null);
@@ -44,7 +46,7 @@ export const FlightPathReveal: React.FC<FlightPathRevealProps> = ({
 
           const path = pathRef.current;
           const butterfly = butterflyRef.current;
-          if (!path || !butterfly) return;
+          if (!path) return;
 
           const pathLength = path.getTotalLength();
           path.style.strokeDasharray = `${pathLength}`;
@@ -61,12 +63,18 @@ export const FlightPathReveal: React.FC<FlightPathRevealProps> = ({
             // Draw line
             path.style.strokeDashoffset = `${pathLength * (1 - easeProgress)}`;
 
-            // Travel butterfly along path
-            const point = path.getPointAtLength(pathLength * easeProgress);
-            butterfly.style.transform = `translate3d(${point.x}px, ${point.y}px, 0)`;
+            // Travel butterfly along path if dynamic
+            if (butterfly) {
+              const point = path.getPointAtLength(pathLength * easeProgress);
+              butterfly.style.transform = `translate3d(${point.x}px, ${point.y}px, 0)`;
+            }
 
             if (progress < 1) {
               animFrameId = requestAnimationFrame(step);
+            } else {
+              // Solid continuous line upon completion
+              path.style.strokeDasharray = 'none';
+              path.style.strokeDashoffset = '0';
             }
           };
 
@@ -78,6 +86,7 @@ export const FlightPathReveal: React.FC<FlightPathRevealProps> = ({
           const path = pathRef.current;
           if (path) {
             const pathLength = path.getTotalLength();
+            path.style.strokeDasharray = `${pathLength}`;
             path.style.strokeDashoffset = `${pathLength}`;
           }
         }
@@ -97,6 +106,7 @@ export const FlightPathReveal: React.FC<FlightPathRevealProps> = ({
   const isDark = theme === 'dark';
   const strokeColor = isDark ? '#D4BDE6' : '#7928CA'; // Lavender in dark mode, royal amethyst in light mode
   const isLtr = direction === 'left-to-right';
+  const isRightAligned = align === 'right';
 
   return (
     <div
@@ -108,18 +118,29 @@ export const FlightPathReveal: React.FC<FlightPathRevealProps> = ({
       aria-hidden="true"
     >
       <div className="relative w-full h-12 sm:h-16 flex items-center justify-between">
-        {/* Perched butterfly at origin (start of curve) */}
-        <div className="absolute left-2 sm:left-6 top-0 z-20 transform -translate-y-1/2 flex items-center gap-2">
-          <Butterfly
-            variant="profile"
-            state="resting"
-            size={28}
-            strokeColor={strokeColor}
-            accentColor="#FF662B"
-            fillOpacity={0.25}
-            registerAsTarget={true}
-          />
-          {label && (
+        {/* Perched butterfly and label */}
+        <div
+          className={`absolute ${
+            isRightAligned ? 'right-2 sm:right-6' : 'left-2 sm:left-6'
+          } top-0 z-20 transform -translate-y-1/2 flex items-center gap-2`}
+        >
+          {isRightAligned && label && (
+            <span className="font-serif italic text-sm sm:text-base text-amber-vibrant tracking-wide font-normal -mt-2">
+              {label}
+            </span>
+          )}
+          <div className={isRightAligned ? 'transform -scale-x-100' : ''}>
+            <Butterfly
+              variant="profile"
+              state="resting"
+              size={28}
+              strokeColor={strokeColor}
+              accentColor="#FF662B"
+              fillOpacity={0.25}
+              registerAsTarget={true}
+            />
+          </div>
+          {!isRightAligned && label && (
             <span className="font-serif italic text-sm sm:text-base text-amber-vibrant tracking-wide font-normal -mt-2">
               {label}
             </span>
@@ -132,7 +153,7 @@ export const FlightPathReveal: React.FC<FlightPathRevealProps> = ({
           fill="none"
           preserveAspectRatio="none"
         >
-          {/* Elegant hand-drawn curving flight path */}
+          {/* Elegant hand-drawn continuous curving flight path */}
           <path
             ref={pathRef}
             d={
@@ -142,35 +163,12 @@ export const FlightPathReveal: React.FC<FlightPathRevealProps> = ({
             }
             stroke={strokeColor}
             strokeWidth="1.5"
-            strokeDasharray="5 5"
             strokeLinecap="round"
             style={{
               transition: 'stroke-dashoffset 1.4s cubic-bezier(0.25, 1, 0.5, 1)',
             }}
           />
         </svg>
-
-        {/* Small traveling flight butterfly */}
-        <div
-          ref={butterflyRef}
-          className="absolute top-0 left-0 transition-opacity duration-500 z-10"
-          style={{
-            transform: isLtr ? 'translate3d(15px, 50px, 0)' : 'translate3d(680px, 50px, 0)',
-            opacity: hasRevealed ? 1 : 0,
-          }}
-        >
-          <div className="transform -translate-x-1/2 -translate-y-1/2">
-            <Butterfly
-              variant="flutter"
-              state={hasRevealed ? 'hovering' : 'resting'}
-              size={24}
-              strokeColor={strokeColor}
-              accentColor="#FF662B"
-              fillOpacity={0.2}
-              registerAsTarget={true}
-            />
-          </div>
-        </div>
       </div>
     </div>
   );

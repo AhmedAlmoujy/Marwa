@@ -125,36 +125,6 @@ const AMBIENT_BUTTERFLIES: ButterflyConfig[] = [
 ];
 
 export const ButterflyField: React.FC = () => {
-  const { isPaused, prefersReducedMotion } = useMotion();
-
-  return (
-    <div className="absolute inset-0 pointer-events-none overflow-hidden -z-1" aria-hidden="true">
-      {AMBIENT_BUTTERFLIES.map((b) => (
-        <div
-          key={b.id}
-          className={`absolute transition-transform duration-700 ease-out will-change-transform ${
-            b.hideOnMobile ? 'hidden md:block' : 'block'
-          }`}
-          style={{
-            top: b.top,
-            bottom: b.bottom,
-            left: b.left,
-            right: b.right,
-            transform: `rotate(${b.rotation}deg)`,
-            opacity: b.opacity,
-          }}
-        >
-          <Butterfly
-            variant={b.variant}
-            state={isPaused || prefersReducedMotion ? 'static' : b.state}
-            size={b.size}
-            strokeColor={b.strokeColor}
-            accentColor={b.accentColor}
-            fillOpacity={b.fillOpacity}
-            withSparkles={false}
-          />
-        </div>
-      ))}
-    </div>
-  );
+  return null;
 };
+

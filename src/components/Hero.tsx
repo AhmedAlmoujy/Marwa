@@ -3,7 +3,6 @@
 import React, { useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { HeroButterflySequence } from './HeroButterflySequence';
 import { Butterfly } from './Butterfly';
 import { ArrowRight, Sparkles } from 'lucide-react';
 import { TiltCard3D } from './TiltCard3D';
@@ -19,12 +18,6 @@ export const Hero: React.FC = () => {
       <div className="absolute top-1/4 -left-20 w-80 h-80 bg-amber-flame/15 rounded-full blur-[120px] pointer-events-none -z-10" />
       <div className="absolute bottom-10 right-10 w-120 h-120 bg-purple-vivid/20 rounded-full blur-[140px] pointer-events-none -z-10" />
 
-      {/* Signature Butterfly Emergence Sequence (Moved to Graduation section as requested) */}
-      {/* <HeroButterflySequence
-        portraitContainerRef={portraitContainerRef}
-        headlineRef={headlineRef}
-      /> */}
-
       {/* Main Asymmetric Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center">
         {/* Left Column: Typography & Narrative (7 cols on desktop) */}
@@ -33,7 +26,7 @@ export const Hero: React.FC = () => {
           <div className="flex items-center gap-3 mb-2.5">
             <span className="w-8 h-0.5 bg-amber-flame" />
             <span className="text-xs md:text-sm font-semibold tracking-[0.2em] uppercase text-amber-vibrant">
-              Marwa El-Bahnsawy — Artist · Graphic Designer · Printmaker
+              Marwa El-Bahnsawy — Artist · Graphic Designer
             </span>
           </div>
 
@@ -47,7 +40,7 @@ export const Hero: React.FC = () => {
             A new world of{' '}
             <span className="italic font-normal text-transparent bg-clip-text bg-linear-to-r from-amber-vibrant via-amber-glow to-[#FF5722] relative inline-block">
               transformation.
-              {/* Hand-drawn SVG Accent Underline revealed as butterfly passes */}
+              {/* Hand-drawn SVG Accent Underline */}
               <svg
                 id="hero-hand-drawn-accent"
                 className="absolute -bottom-2.5 left-0 w-full h-2.5 text-amber-flame pointer-events-none opacity-0 transition-opacity duration-300"
@@ -66,7 +59,7 @@ export const Hero: React.FC = () => {
                 />
               </svg>
               {/* Connected decorative accent butterfly perched lower over letter n to its right */}
-              <span className="absolute top-0.5 sm:top-1 md:top-1.5 -right-2 sm:-right-3 hidden md:inline-block pointer-events-none transform -rotate-12 -scale-x-100">
+              <span className="absolute top-0.5 sm:top-1 md:top-1.5 -right-2 sm:-right-3 inline-block pointer-events-none transform -rotate-12 -scale-x-100 z-10">
                 <Butterfly
                   id="hero-perched-butterfly"
                   variant="profile"
@@ -83,7 +76,7 @@ export const Hero: React.FC = () => {
           {/* Editorial Subheadline & Verified Background with Read More expansion */}
           <div className="font-sans text-base md:text-[16.5px] text-(--text-secondary) max-w-xl leading-relaxed mb-2 font-normal space-y-3">
             <p>
-              My name is Marwa El-Bahnsawy, and I am a graduate of the Faculty of Fine Arts, Graphic Department – Printed Design Division, Class of 2024.
+              My name is Marwa El-Bahnsawy, and I am a graduate of the Faculty of Fine Arts, Graphic Department, Class of 2024.
             </p>
             <p>
               I’m an artist with a passion for graphic design, driven by the desire to create visually captivating and meaningful work. My artistic background shapes the way I approach design — through exploration, experimentation, and attention to the details that give a visual idea its depth.
@@ -186,15 +179,19 @@ export const Hero: React.FC = () => {
 
             {/* Top-left perching Butterfly resting on the outer background frame outside the photo */}
             <div className="absolute -top-11 sm:-top-13 -left-11 sm:-left-13 z-20 flex items-center justify-center w-24 h-24 sm:w-26 sm:h-26 pointer-events-none">
-              <svg className="w-full h-full animate-spin-slow opacity-85" viewBox="0 0 140 140">
+              <svg className="w-full h-full animate-spin-slow opacity-90" viewBox="0 0 140 140">
                 <path
                   id="circlePathHero"
-                  d="M 70, 70 m -50, 0 a 50,50 0 1,1 100,0 a 50,50 0 1,1 -100,0"
+                  d="M 70, 70 m -49, 0 a 49,49 0 1,1 98,0 a 49,49 0 1,1 -98,0"
                   fill="none"
                 />
-                <text className="text-[9px] uppercase tracking-[0.22em] fill-amber-vibrant font-mono font-medium">
-                  <textPath href="#circlePathHero">
-                    IDEAS TAKE FLIGHT • FINE ARTS 2024 • PRINTED DESIGN •
+                <text className="text-[8.5px] uppercase fill-amber-vibrant font-mono font-medium">
+                  <textPath
+                    href="#circlePathHero"
+                    textLength="307"
+                    lengthAdjust="spacing"
+                  >
+                    IDEAS TAKE FLIGHT  •   FINE ARTS 2024   • 
                   </textPath>
                 </text>
               </svg>
@@ -211,7 +208,7 @@ export const Hero: React.FC = () => {
               </div>
             </div>
 
-            {/* Metadata badges placed underneath portrait photo in subtle small text (as requested in sketch) */}
+            {/* Metadata badges placed underneath portrait photo in subtle small text */}
             <div className="mt-4 pt-3 flex flex-wrap justify-between items-center text-[11px] text-(--text-muted) border-t border-(--border-subtle)/60 px-1 gap-2 w-full">
               <div>
                 <span className="font-semibold text-amber-vibrant uppercase tracking-wider text-[10px]">Academic Root: </span>
@@ -219,12 +216,23 @@ export const Hero: React.FC = () => {
               </div>
               <div>
                 <span className="font-semibold text-amber-vibrant uppercase tracking-wider text-[10px]">Core Craft: </span>
-                <span className="text-(--text-secondary)">Artist · Graphic Designer · Printmaker</span>
+                <span className="text-(--text-secondary)">Artist · Graphic Designer</span>
               </div>
               <div>
                 <span className="font-semibold text-amber-vibrant uppercase tracking-wider text-[10px]">Location: </span>
                 <span className="text-(--text-secondary)">Egypt • Available Globally</span>
               </div>
+            </div>
+
+            {/* Quick jump link to explore work and sections */}
+            <div className="mt-2.5 flex justify-end w-full">
+              <a
+                href="#process"
+                className="inline-flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wider text-amber-vibrant hover:text-amber-glow transition-all group"
+              >
+                <span>Selected Works</span>
+                <span className="text-xs group-hover:translate-y-0.5 transition-transform">↓</span>
+              </a>
             </div>
           </div>
         </div>
